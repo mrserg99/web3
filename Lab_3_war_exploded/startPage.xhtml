@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/template/templMain.xhtml">
+    <ui:define name="head">
+        <h:outputStylesheet library="css" name="SPS.css"/>
+        <h:outputScript library="js" name="Time.js" />
+
+    </ui:define>
+    <!--<td><h:graphicImage library="images" name="avatar.png" align="middle" alt="Аватар разработчика"/></td>-->
+    <ui:define name="content" id="main">
+        <h:body onload="time()">
+            <td>
+                <h:form id="form">
+                    <h:panelGrid id="grid" columns="1" border="0" >
+                        <h:panelGroup layout="block" id="time" class="clock" />
+                        <br/>
+                        <div class="button">
+                            <h:commandButton action="/main?faces-redirect=true" value="Основная страница" id="Button" />
+                        </div>
+                        <br/>
+                    </h:panelGrid>
+                </h:form>
+            </td>
+        </h:body>
+    </ui:define>
+</ui:composition>
+</html>

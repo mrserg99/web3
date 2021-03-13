@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templMain.xhtml">
+    <ui:define name="head">
+        <h:outputScript library="js" name="canvas.js" />
+        <h:outputScript library="js" name="validation.js" />
+        <h:outputScript library="js" name="paintPoint.js" />
+        <h:outputScript library="js" name="mouseXYDetected.js" />
+        <h:outputStylesheet library="css" name="style.css"/>
+    </ui:define>
+    <ui:define name="content"><h:body onload="canvas(), mouseXYDetected()">
+        <table id="mainTable" class="shaded">
+
+            <h:panelGrid columns="2" cellpadding = "10" cellspacing = "1" class="shaded">
+
+                <h:panelGroup >
+                    <tr>
+                        <div class="Components">
+                            <td>
+                                <h:outputText value="Выберете X"/>
+                                <div id="targetX"></div>
+                                <h:form id="buttonX" onsubmit="validationX(); return false">
+                                    <br/>
+                                    <td class="X">
+                                        <h:commandButton value="-2"/>
+                                        <br/>
+                                        <h:commandButton value="-1.5"/>
+                                    </td><td class="X">
+                                    <h:commandButton value="-1"/>
+                                    <br/>
+                                    <h:commandButton value="-0.5"/>
+                                    <br/>
+                                    <h:commandButton value="0"/>
+                                </td><td class="X">
+                                    <h:commandButton value="0.5" />
+                                    <br/>
+                                    <h:commandButton value="1" />
+                                    <br/>
+                                    <h:commandButton value="1.5" />
+                                </td>
+
+                                </h:form>
+                            </td>
+                        </div>
+                        <h:panelGroup layout="block" id="time" >
+                            <canvas id="canvas" width="700px" height="400px"></canvas>
+                            <h:form>
+                            <p:remoteCommand name="sendRequest" action="#{main.validate}"/>
+                            </h:form>
+                        </h:panelGroup>
+                        <div></div>
+                        <div class="Components">
+                            <td>
+                                <h:outputText value="Выберете Y"/>
+                                <br/>
+                                <h:form id="inputY">
+                                    <br/>
+                                    <h:inputText id="mainInput"/>
+                                    <br/>
+                                    <h:commandButton value = "submit" onclick="validationY(); return false"/>
+                                    <br/>
+                                </h:form>
+                            </td>
+                        </div>
+                        <div class="Components">
+                            <td>
+                                <h:outputText value="Выберете R"/>
+
+                                <div id="targetR"></div>
+
+                                <h:form id="buttonR" onsubmit="validationR(); return false">
+                                    <td>
+                                        <h:commandLink value="1" />
+                                    </td><td>
+                                    <h:commandLink value="2" />
+                                </td><td>
+                                    <h:commandLink value="3" />
+                                </td><td>
+                                    <h:commandLink value="4" />
+                                </td><td>
+                                    <h:commandLink value="5" />
+                                </td>
+                                </h:form>
+                            </td>
+                        </div>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <h:form onsubmit="validation(); return false">
+                                <p:remoteCommand name="sendRequest" action="#{main.validate}"/>
+                                <div class="CheckButton">
+                                    <td class="CheckButton">
+                                        <br/>
+                                        <br/>
+                                        <h:commandButton  value="Проверить"/>
+                                        <br/>
+                                        <h:commandButton action="/startPage?faces-redirect=true" value="Вернуться на стартовую страницу" id="Button" />
+
+                                    </td>
+                                </div>
+                            </h:form>
+                        </td>
+                    </tr>
+                </h:panelGroup>
+
+
+            </h:panelGrid>
+            <h:dataTable value="#{main.points}" var="p" id="tableResults">
+                <h:column>
+                    <f:facet name="header">x</f:facet>
+                    #{p.x}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">y</f:facet>
+                    #{p.y}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">r</f:facet>
+                    #{p.r}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Точка входит в ОДЗ</f:facet>
+                    #{p.result}
+                </h:column>
+            </h:dataTable>
+        </table>
+    </h:body>
+
+    </ui:define>
+</ui:composition>
+</html>
