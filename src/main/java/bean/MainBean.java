@@ -12,6 +12,8 @@ import javax.persistence.Persistence;
 import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 
 
@@ -21,12 +23,16 @@ import java.util.Map;
 public class MainBean implements Serializable
 {
 
+    private Integer[] rs = {1, 2, 3, 4, 5};
     private ArrayList<Point> points = new ArrayList<Point>();
+    private HashSet<Integer> valuesR = new HashSet<Integer>(Arrays.asList(rs));
 
     public void validate() throws ClassNotFoundException, SQLException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
-        if (params.get("X-value") != null || params.get("Y-value") != null || params.get("R-value") != null) {
+        if (params.get("X-value") != null || params.get("Y-value") != null || params.get("R-value") != null ||
+                Double.parseDouble(params.get("X-value")) > -2 || Double.parseDouble(params.get("X-value")) < 1.5 ||
+                Double.parseDouble(params.get("Y-value")) > -3 || Double.parseDouble(params.get("X-value")) < 5) {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("Results");
             EntityManager em = emf.createEntityManager();
 
